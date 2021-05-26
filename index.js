@@ -34,19 +34,29 @@ switch (preffered.length)
     case 2: //--------------------preffered with 2 element, also  has any
     var closet=preffered;
     
-    if (preffered[0]!='any')
+    
+    if (preffered[0]=='any')
+    {
+         if (intersection.includes(preffered[1]))
+            for (let i=0; i<intersection.indexOf(preffered[1]);i++)
+             closet.push(intersection[i]);
+
+            //console.log(closet+"----------------");
+        }
+    else {
+       
         for (let x of intersection)
         if (x<closet) {
             closet[0]=x;
             break;
         }
-    else {
-
-     //    if (intersection.includes(preffered[1]))
-      //      for (let i=0; i<intersection.indexOf(preffered[1]))
-
+       
     }
-    if (intersection.length==1) return [closet[0]];   
+    if (intersection.length==1) 
+    {
+        if (closet[0]=='any') closet[0]=allowed[0];
+        return [closet[0]];   
+    }
     if (preffered[0]> intersection[intersection.length-1]) return [intersection[intersection.length-1]];
 
     if (intersection.includes(preffered[1])) closet[1]=preffered[1];
@@ -55,6 +65,14 @@ switch (preffered.length)
               closet[1]=x;
               break;
             }
+    if (preffered[0]=='any')
+         {
+             preffered.splice(0,1);
+             var a=preffered[0];
+             preffered.splice(0,1);
+             preffered.push(a);
+         }
+
     return [closet];
 
     break;
@@ -63,13 +81,6 @@ switch (preffered.length)
 
 }
 
-
-
-
-//console.log(closet)
-
-//console.log(intersection+"--int")
-
     return [closet];
 }
 
@@ -77,16 +88,14 @@ switch (preffered.length)
 console.log(attempt([240,360,720],[360,720],[1080]))//360
 console.log(attempt([240,720],[360,720],[1080]))//720
 console.log(attempt([240],[360,720],[1080]))//[]
-
 console.log(attempt([240,360,720],[240,360,720,1080],[240,360]))//[240, 360]
 console.log(attempt([240,720],[240,360,720,1080],[240,360]))//[240, 720]
 console.log(attempt([240,720],[240,360,1080],[240,360]))//[240]
 console.log(attempt([720],[240,360,1080],[240,360]))//[]
 console.log(attempt([240,360],[240,360],[720,1080]))//[360]
-
 console.log("-----------------")
 console.log(attempt([240,360,720],[360,'any'],[360,720]))//[360,720]
-console.log(attempt([240,360,720],[360,720],['any']))//[360,720]
-
-
+//console.log(attempt([240,360,720],[360,720],['any']))//[360,720]
+console.log(attempt([240,360,720],[240,360,720],['any', 720]))//[240,360,720]
+console.log(attempt([240,360,720],[360,1080],['any', 720]))//[360]
 console.log(attempt([240,360,720],[1080],['any', 720]))//[]
