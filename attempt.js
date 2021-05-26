@@ -1,4 +1,5 @@
-function attempt(available, allowed, preffered)
+
+ function attempt(available, allowed, preffered)
 {
 
 if (allowed.includes('any'))
@@ -82,16 +83,5 @@ switch (preffered.length)
     return [closet];
 }
 
-console.log(attempt([240,360,720],[360,720],[1080]))//360
-console.log(attempt([240,720],[360,720],[1080]))//720
-console.log(attempt([240],[360,720],[1080]))//[]
-console.log(attempt([240,360,720],[240,360,720,1080],[240,360]))//[240, 360]
-console.log(attempt([240,720],[240,360,720,1080],[240,360]))//[240, 720]
-console.log(attempt([240,720],[240,360,1080],[240,360]))//[240]
-console.log(attempt([720],[240,360,1080],[240,360]))//[]
-console.log(attempt([240,360],[240,360],[720,1080]))//[360]
-console.log(attempt([240,360,720],[360,'any'],[360,720]))//[360,720]
-console.log(attempt([240,360,720],[240,360,720],['any', 720]))//[240,360,720]
-console.log(attempt([240,360,720],[360,1080],['any', 720]))//[360]
-console.log(attempt([240,360,720],[1080],['any', 720]))//[]
-console.log(attempt([240,360,720],[360,720],['any']))//[360,720]
+
+export default attempt;
