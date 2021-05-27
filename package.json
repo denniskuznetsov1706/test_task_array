@@ -1,0 +1,14 @@
+{
+  "name": "test_array",
+  "version": "1.0.0",
+  "description": "",
+  "main": "my.test.js",
+  "scripts": {
+    "test": "tst .run my.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wTesting": "^1.0.509"
+  }
+}

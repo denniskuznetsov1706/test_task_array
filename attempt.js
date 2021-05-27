@@ -1,64 +1,35 @@
+module.exports.attempt = function (available, allowed, preffered) {
+  //----------------------if allowed has 'any'-------------
+  if (allowed.includes('any')) {
+    allowed.splice(allowed.indexOf('any'), 1)
+    for (let i = available.indexOf(allowed[0]) + 1; i < available.length; i++)
+      allowed.push(available[i])
+  }
+  //------------------------------------------------------
+  let result = []
+  let interSection = available.filter(x => allowed.includes(x)) // union operarion -> /
+  //----------------------if preffered has 'any'-------------
+  if (preffered.includes('any')) return interSection
+  //------------------------------------------
+  if (interSection.length == 0) return []
+  let closestLeft = interSection.filter(num => num <= preffered[0])
+  result.push(Math.min(...closestLeft))
+  //---------------if preffered has more than 1 element------------------------
+  if (preffered.length > 1) {
+    let closestRight = interSection.filter(
+      num => num <= preffered[preffered.length - 1]
+    )
+    if (
+      (interSection[interSection.length - 1] >
+        preffered[preffered.length - 1]) &
+      !interSection.includes(preffered[preffered.length - 1])
+    )
+      result.push(interSection[interSection.length - 1])
+    else result.push(Math.max(...closestRight))
+  }
+  //--------------------------------------------------------------
+  result = Array.from(new Set(result)) //state only uniqe elements of the result array
+  if (Math.max(...allowed) <= preffered[0]) result = [Math.max(...result)]
 
-module.exports.attempt = function( available, allowed, preffered ) {
-  if ( allowed.includes( 'any' ) ) {
-    allowed.splice( allowed.indexOf( 'any' ), 1  ) ;
-      for ( let i = available.indexOf( allowed [ 0 ] ) + 1; i < available.length; i++ )
-        allowed.push( available [ i ] );
-  }    
-
-
-let intersection = available.filter( x => allowed.includes( x ) );
-
-if ( intersection.length == 0) return [];
-
-
-switch ( preffered.length ) {
-  case 1: //------------------------prefferd with 1 element
-    var closet = preffered [ 0 ];
-    if ( preffered.includes( 'any' ) ) return intersection;
-      for ( let x of intersection )
-        if ( x < closet ) {
-          closet = x;
-          break;
-        }
-          return [ closet ];
-  break;
-  case 2: //--------------------preffered with 2 element, also  has any
-    var closet = preffered;
-    if ( preffered [ 0 ] == 'any' ) {
-      if ( intersection.includes( preffered [ 1 ] ) )
-        for ( let i = 0; i < intersection.indexOf( preffered [ 1 ] ); i++ )
-          closet.push( intersection [ i ] );
-        }
-    else {
-      for ( let x of intersection )
-        if ( x < closet ) {
-            closet [ 0 ] = x;
-            break;
-        }
-    }
-    if ( intersection.length == 1) {
-      if ( closet [ 0 ] == 'any' ) closet [ 0 ] = allowed [ 0 ];
-      return [ closet [ 0 ] ];   
-    }
-    if ( preffered [ 0 ] > intersection [ intersection.length-1 ] ) return [ intersection [ intersection.length - 1] ];
-    if ( intersection.includes( preffered [ 1 ] ) ) closet [ 1 ] = preffered [ 1 ];
-    else for ( let x of intersection )
-           if ( preffered [ 1 ] < x ) {
-             closet [ 1 ] = x;
-             break;
-            }
-    if ( preffered [ 0 ] == 'any' ) {
-      preffered.splice( 0, 1 );
-      var a = preffered [ 0 ];
-      preffered.splice( 0, 1 );
-      preffered.push( a );
-    }
-
-    return  closet ;
-    break;
+  return result
 }
-
-    return  closet ;
-}
-
