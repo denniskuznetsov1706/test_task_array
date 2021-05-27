@@ -1,10 +1,10 @@
 
-function attempt( available, allowed, preffered ) {
+module.exports.attempt = function( available, allowed, preffered ) {
   if ( allowed.includes( 'any' ) ) {
-    allowed.splice( allowed.indexOf( 'any', 1 ) ) ;
+    allowed.splice( allowed.indexOf( 'any' ), 1  ) ;
       for ( let i = available.indexOf( allowed [ 0 ] ) + 1; i < available.length; i++ )
         allowed.push( available [ i ] );
-}    
+  }    
 
 
 let intersection = available.filter( x => allowed.includes( x ) );
@@ -55,10 +55,10 @@ switch ( preffered.length ) {
       preffered.push( a );
     }
 
-    return [ closet ];
+    return  closet ;
     break;
 }
 
-    return [ closet ];
+    return  closet ;
 }
-export default attempt;
+
