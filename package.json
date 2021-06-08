@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "wTesting": "^1.0.509"
+  },
+  "devDependencies": {
+    "eslint": "^7.28.0"
   }
 }
